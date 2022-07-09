@@ -7,16 +7,16 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-type HeroRepository interface {
+type HeroesRepository interface {
 	CreateHero(ctx context.Context, hero *models.Heroes) (*mongo.InsertOneResult, error)
 }
 
-var HeroImplementation HeroRepository
+var HeroesImplementation HeroesRepository
 
-func SetHeroRepository(repository HeroRepository) {
-	HeroImplementation = repository
+func SetHeroesRepository(repository HeroesRepository) {
+	HeroesImplementation = repository
 }
 
 func CreateHero(ctx context.Context, hero *models.Heroes) (*mongo.InsertOneResult, error) {
-	return HeroImplementation.CreateHero(ctx, hero)
+	return HeroesImplementation.CreateHero(ctx, hero)
 }

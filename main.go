@@ -29,7 +29,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	repository.SetHeroRepository(repo)
+	repository.SetHeroesRepository(repo)
 
 	log.Printf("Server running on port %s", port)
 	log.Fatal(http.ListenAndServe(":"+port, router))
