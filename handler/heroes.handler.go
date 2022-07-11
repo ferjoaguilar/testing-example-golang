@@ -35,7 +35,7 @@ func CreateHeroe() http.HandlerFunc {
 		json.NewEncoder(w).Encode(map[string]any{
 			"status":  true,
 			"message": "New hero created",
-			"data":    reponse.InsertedID,
+			"data":    reponse,
 		})
 	}
 }

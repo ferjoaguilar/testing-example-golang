@@ -30,7 +30,7 @@ func TestMain(m *testing.M) {
 	os.Exit(code)
 }
 
-func TestCreateHeroeF(t *testing.T) {
+func TestCreateHeroe(t *testing.T) {
 	h := models.Heroes{
 		Name:        "Mei",
 		Role:        "Damage",
@@ -48,7 +48,7 @@ func TestCreateHeroeF(t *testing.T) {
 	res := httptest.NewRecorder()
 	defer req.Body.Close()
 
-	handler.CreateHeroeF(res, req)
+	handler.CreateHeroe().ServeHTTP(res, req)
 	log.Println(res.Code)
 	log.Println(res.Body)
 }
