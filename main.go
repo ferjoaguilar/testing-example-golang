@@ -4,35 +4,38 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/ferjoaguilar/testing-example-golang/database"
 	"github.com/ferjoaguilar/testing-example-golang/handler"
 	"github.com/ferjoaguilar/testing-example-golang/repository"
-	"github.com/ferjoaguilar/testing-example-golang/utils"
 	"github.com/gorilla/mux"
+	"github.com/joho/godotenv"
 )
 
 func main() {
 	router := mux.NewRouter()
 	bindRoutes(router)
 
-	port, err := utils.Enviroment("PORT")
+	err := godotenv.Load(".env")
 	if err != nil {
 		log.Fatal(err)
 	}
-	url, _ := utils.Enviroment("DATABASE_URL")
-	dbname, _ := utils.Enviroment("DATABASE_NAME")
+
+	PORT := os.Getenv("PORT")
+	DATABASEURL := os.Getenv("DATABASE_URL")
+	DBNAME := os.Getenv("DATABASE_NAME")
 
 	// Start database
-	repo, err := database.NewMongoRepository(url, dbname)
+	repo, err := database.NewMongoRepository(DATABASEURL, DBNAME)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	repository.SetHeroesRepository(repo)
 
-	log.Printf("Server running on port %s", port)
-	log.Fatal(http.ListenAndServe(":"+port, router))
+	log.Printf("Server running on port %s", PORT)
+	log.Fatal(http.ListenAndServe(":"+PORT, router))
 }
 
 func bindRoutes(r *mux.Router) {
